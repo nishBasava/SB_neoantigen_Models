@@ -3,16 +3,13 @@
     git clone https://github.com/JaredJGartner/SB_neoantigen_Models.git
     cd SB_neoantigen_Models
 
-##mk dependency directories
-    mkdir src/netMHCStabpan1.0
-    mkdir src/immunogenicity
 
 
 ##move accept licensing agreements, download and move downloads to proper directories
 
-    mv /Users/gartnerjj/Downloads/netMHCstabpan-1.0a.Darwin.tar.gz src/netMHCStabpan1.0/
-    mv /Users/gartnerjj/Downloads/IEDB_Immunogenicity-1.1.tar.gz  src/immunogenicity/
-    mv /Users/gartnerjj/Downloads/netMHCpan-2.8a.Darwin.tar.gz src/NetMHCpan2.8/
+    mv /Users/gartnerjj/Downloads/netMHCstabpan-1.0a.Darwin.tar.gz src/
+    mv /Users/gartnerjj/Downloads/IEDB_Immunogenicity-1.1.tar.gz  src/
+    mv /Users/gartnerjj/Downloads/netMHCpan-4.1b.Darwin.tar.gz src/
 
 ##complete dependency installs
 
@@ -32,39 +29,42 @@
         conda create -q -n mhcflurry-env python=3.6 'tensorflow<2.0.0' xlrd xlsxwriter
         conda activate mhcflurry-env
         pip install mhcflurry
+
+conda install-c source-forge np_utils
+conda install pandas=1.5
+conda install -c bioconda mhcflurry=2.1.0
+
         pip uninstall scikit-learn
         conda install scikit-learn==0.20.1
         mhcflurry-downloads fetch models_class1_presentation
 
     
 
-    #netmhcpan2.8
-        cd src/NetMHCpan2.8
-        tar xvfz netMHCpan-2.8a.Darwin.tar.gz
-        cd netMHCpan-2.8
-        wget http://www.cbs.dtu.dk/services/NetMHCpan-2.8/data.tar.gz
+    #netmhcpan4.1
+        cd src
+        tar xvfz netMHCpan-4.1b.Darwin.tar.gz
+        cd netMHCpan-4.1
+        wget https://services.healthtech.dtu.dk/services/NetMHCpan-4.1/data.tar.gz
         tar xvfz data.tar.gz
         #edit netMHCpan script as shown in readme example below
-        #setenv	NMHOME	/Users/gartnerjj/Desktop/neoantigen_git/NetMHCpan2.8/netMHCpan-2.8
-        #setenv  TMPDIR  /Users/gartnerjj/Desktop/neoantigen_git/tmp
+        #setenv	NMHOME	/Users/nmaddy/nishResearch/SB_neoantigen_Models/src/netMHCpan-4.1
+        #setenv  TMPDIR  /Users/nmaddy/nishResearch/SB_neoantigen_Models/tmp
 
     #netmhcstabpan
-        cd src/netMHCStabpan1.0
+        cd src
         tar xvfz netMHCstabpan-1.0a.Darwin.tar.gz 
         cd netMHCstabpan-1.0
-        wget http://www.cbs.dtu.dk/services/NetMHCstabpan-1.0/data.tar.gz
+        wget https://services.healthtech.dtu.dk/services/NetMHCstabpan-1.0/data.tar.gz
         tar xvfz data.tar.gz
         #edit the script netMHCstabpan as in the readme 3 line change example below
-        #setenv	NMHOME	/Users/gartnerjj/Desktop/neoantigen_git/NetMHCStabpan1.0/netMHCstabpan-1.0
-        #set	NetMHCpan = /Users/gartnerjj/Desktop/neoantigen_git/NetMHCpan2.8/netMHCpan-2.8/netMHCpan
-        #setenv  TMPDIR  /Users/gartnerjj/Desktop/neoantigen_git/tmp
+        #setenv	NMHOME	/Users/nmaddy/nishResearch/SB_neoantigen_Models/src/netMHCstabpan-1.0
+        #set	NetMHCpan = /Users/nmaddy/nishResearch/SB_neoantigen_Models/src/netMHCpan-4.1
+        #setenv  TMPDIR  /Users/nmaddy/nishResearch/SB_neoantigen_Models/tmp
 
     #IEDB Immunogenicity
-        cd src/immunogenicity        
-        tar xvfz IEDB_Immunogenicity-1.1.tar.gz
+        cd src/       
+        tar xvfz IEDB_Immunogenicity-3.0.tar.gz
         cd immunogenicity
-        ##ensure conda environment is activated and converted immunogenicity from python 2 to python 3
-        2to3 predict_immunogenicity.py --add-suffix=3 -n -w
 
 
 ##unzip model and Edit functions4models.py in 
@@ -73,7 +73,7 @@
     gunzip nmer_Model.pickle.gz
 
     #Used text editor to change the paths to locations of IEDB Immunogenicity (beside to use .py3 file), and netmhcstabpan 
-    #immuno_loc = '/Users/gartnerjj/Desktop/SB_neoantigen_Models/src/immunogenicity/predict_immunogenicity.py3'
+    #immuno_loc = '/Users/gartnerjj/Desktop/SB_neoantigen_Models/src/immunogenicity/immunogenicity/predict_immunogenicity.py'
     #netstab = '/Users/gartnerjj/Desktop/SB_neoantigen_Models/src/NetMHCStabpan1.0/netMHCstabpan-1.0/netMHCstabpan'
 
 ##Test neoantigen model
